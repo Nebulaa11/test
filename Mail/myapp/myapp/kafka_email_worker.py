@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 class KafkaEmailWorker:
-    def __init__(self, bootstrap_servers, group_id, topic, recipient):
+    def __init__(self, bootstrap_servers, group_id, topic, recipient,user_id):
         self.consumer = Consumer({
             'bootstrap.servers': bootstrap_servers,
             'group.id': group_id,
@@ -16,6 +16,7 @@ class KafkaEmailWorker:
         })
         self.consumer.subscribe([topic])
         self.recipient = recipient
+        self.user_id = user_id
 
     def run(self):
         while True:
@@ -34,8 +35,9 @@ class KafkaEmailWorker:
     def send_email(self, message):
         try:
             creds = Credentials.from_authorized_user_file('token.json', ['https://www.googleapis.com/auth/gmail.send'])
-        except:
-            print("Error loading credentials")
+        except Exception as e:
+            print("Error loading credentials:", e)
+            raise
 
         service = build('gmail', 'v1', credentials=creds)
 

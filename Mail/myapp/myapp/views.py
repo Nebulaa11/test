@@ -20,7 +20,7 @@ def produce_kafka(request):
 
 def send_email_message_to_kafka(message):
     producer = KafkaProducer(bootstrap_servers='localhost:9092')
-    producer.send('topictest', message.encode())
+    producer.send('topictest', message.bytes(message, encoding='utf-8'))
     producer.flush()
 
 
