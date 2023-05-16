@@ -1,5 +1,11 @@
+
+
 from django.http import HttpResponse
-from kafka_client import KafkaConsumer, KafkaProducer
+from .kafka_client import KafkaConsumer, KafkaProducer
+from .kafka_email_worker import KafkaEmailWorker
+from kafka import KafkaProducer
+
+
 
 def consume_kafka(request):
     consumer = KafkaConsumer('topictest')
@@ -12,5 +18,21 @@ def produce_kafka(request):
     producer.produce(message)
     return HttpResponse('Kafka message produced!')
 
+def send_email_message_to_kafka(message):
+    producer = KafkaProducer(bootstrap_servers='localhost:9092')
+    producer.send('topictest', message.encode())
+    producer.flush()
+
+
+def send_email(request):
+    if request.method == 'POST':
+        recipient = request.POST.get('recipient')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        email_message = f'{subject}: {message}'
+        send_email_message_to_kafka(email_message)
+
+        return HttpResponse('Email sent')
 
 

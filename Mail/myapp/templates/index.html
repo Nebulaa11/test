@@ -11,10 +11,9 @@
 
 <form method="post" action="{% url 'index' %}">
     {% csrf_token %}
-    <textarea name="message" placeholder="Message..."></textarea>
+    <input type="email" name="recipient" placeholder="Recipient email..." required>
+    <textarea name="message" placeholder="Message..." required></textarea>
     <input type="submit" />
 </form>
 </body>
 </html>
-
-

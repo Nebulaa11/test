@@ -17,7 +17,10 @@ Including another URLconf
 from django.urls import path
 from . import views
 
+
+
 urlpatterns = [
-    path('consume/', views.consume_kafka, name='consume_kafka'),
-    path('produce/', views.produce_kafka, name='produce_kafka'),
+    path('consume-kafka/', views.consume_kafka, name='consume-kafka'),
+    path('produce-kafka/', views.produce_kafka, name='produce-kafka'),
+    path('send-email/', views.send_email, name='send-email'),
 ]
