@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'kafka_email_worker',
+    'kafkaemailworker',
     'templates'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'oauth2client.contrib.django_util.middleware.AuthenticationMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -139,3 +140,16 @@ KAFKA_SETTINGS = {
     'group.id': 'my-group',
     'auto.offset.reset': 'earliest'
 }
+
+
+GOOGLE_OAUTH2_CLIENT_ID = '255970971367-j065vr5rl06lni346ibvm14vnqssaub3.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = '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'
+GOOGLE_OAUTH2_REDIRECT_URI = 'http://localhost:8000/oauth2callback'
+
+GOOGLE_API_SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+GOOGLE_API_APPLICATION_NAME = 'client'
+GOOGLE_API_VERSION = 'v1'
+
+# Service account credentials for Google Cloud
+GOOGLE_SERVICE_ACCOUNT_KEYFILE_PATH = 'C:\Users\Hp\OneDrive\Desktop\test\Mail\myapp\myapp\credentials.json'
+GOOGLE_SERVICE_ACCOUNT_EMAIL = 'anantikabajpai11@gmail.com@myapp-386914.iam.gserviceaccount.com'
