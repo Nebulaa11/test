@@ -2,9 +2,9 @@
 
 from django.http import HttpResponse
 from .kafka_client import KafkaConsumer, KafkaProducer
-from .kafka_email_worker import KafkaEmailWorker
-from kafka import KafkaProducer
-from .gmail_client import get_gmail_client
+
+import requests
+
 
 
 def consume_kafka(request):
@@ -14,7 +14,7 @@ def consume_kafka(request):
 
 def produce_kafka(request):
     producer = KafkaProducer('topictest')
-    message = b'Hello, Kafka!'
+    message = b'Welcome User!'
     producer.produce(message)
     return HttpResponse('Kafka message produced!')
 
@@ -24,20 +24,39 @@ def send_email_message_to_kafka(message):
     producer.flush()
 
 
+import requests
+
 def send_email(request):
     if request.method == 'POST':
-        recipient = request.POST.get('recipient')
-        subject = request.POST.get('subject')
-        message = request.POST.get('message')
+        # Get the email data from the request
+        subject = request.POST['subject']
+        message = request.POST['message']
+        sender = request.POST['sender']
+        recipient = request.POST['recipient']
 
-        email_message = f'{subject}: {message}'
-        gmail_client = get_gmail_client()
-        gmail_client.send_email(recipient, subject, message)
+        # Set up the Mailgun API endpoint and authentication
+        url = 'https://api.mailgun.net/v3/sandboxd59be11bd668466d8163946736d0b6e0.mailgun.org/messages'
+        auth = ('api', '412786bad81c11cc3bc7824a1a91283d-db4df449-c37c47bb')
 
-        # Publish the email message to Kafka
-        producer = KafkaProducer('topictest')
-        producer.produce(email_message.encode())
+        # Set up the email data
+        data = {
+            'from': sender,
+            'to': recipient,
+            'subject': subject,
+            'text': message
+        }
 
-        return HttpResponse('Email sent')
+        # Send the email using the Mailgun API
+        response = requests.post(url, auth=auth, data=data)
+
+        # Check if the email was sent successfully
+        if response.status_code == 200:
+            # Publish the email message to Kafka
+            producer = KafkaProducer('topictest')
+            producer.produce(message.encode())
+            return HttpResponse('Email sent')
+        else:
+            return HttpResponse('Error sending email')
+
 
 

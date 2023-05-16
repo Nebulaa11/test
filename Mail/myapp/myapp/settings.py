@@ -127,12 +127,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'anantika11alt@gmail.com'
-EMAIL_HOST_PASSWORD = 'vglzxhurrdrszebr'
+
 
 
 KAFKA_SETTINGS = {
@@ -153,3 +148,12 @@ GOOGLE_API_VERSION = 'v1'
 # Service account credentials for Google Cloud
 GOOGLE_SERVICE_ACCOUNT_KEYFILE_PATH = 'C:\Users\Hp\OneDrive\Desktop\test\Mail\myapp\myapp\credentials.json'
 GOOGLE_SERVICE_ACCOUNT_EMAIL = 'anantikabajpai11@gmail.com@myapp-386914.iam.gserviceaccount.com'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'postmaster@sandboxd59be11bd668466d8163946736d0b6e0.mailgun.org.com'
+EMAIL_HOST_PASSWORD = 'y412786bad81c11cc3bc7824a1a91283d-db4df449-c37c47bb'
+DEFAULT_FROM_EMAIL = 'anantikabajpai11@gmail.com'
