@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'kafkaemailworker',
+   
     'templates'
 ]
 
@@ -146,7 +146,7 @@ GOOGLE_API_APPLICATION_NAME = 'client'
 GOOGLE_API_VERSION = 'v1'
 
 # Service account credentials for Google Cloud
-GOOGLE_SERVICE_ACCOUNT_KEYFILE_PATH = 'C:\Users\Hp\OneDrive\Desktop\test\Mail\myapp\myapp\credentials.json'
+GOOGLE_SERVICE_ACCOUNT_KEYFILE_PATH = '\myapp\myapp\credentials.json'
 GOOGLE_SERVICE_ACCOUNT_EMAIL = 'anantikabajpai11@gmail.com@myapp-386914.iam.gserviceaccount.com'
 
 
