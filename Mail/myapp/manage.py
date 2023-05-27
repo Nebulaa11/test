@@ -4,6 +4,13 @@ import os
 import sys
 
 
+
+project_path = os.path.dirname(os.path.abspath(__file__))
+myapp_path = os.path.join(project_path, 'myapp')
+
+sys.path.append(myapp_path)
+
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myapp.settings')
